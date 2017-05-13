@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  AJMAnimatorView
 //
-//  Created by Angel Jesse Morales Karam Kairuz on 13/05/17.
+//  Created by TheKairuz on 13/05/17.
 //  Copyright © 2017 TheKairuzBlog. All rights reserved.
 //
 
