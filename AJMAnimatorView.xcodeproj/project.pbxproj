@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8827C7381F266A8600A23FC4 /* Animatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8827C7371F266A8600A23FC4 /* Animatable.swift */; };
 		88B46BB11EC73F13008B2FF6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B46BB01EC73F13008B2FF6 /* AppDelegate.swift */; };
 		88B46BB31EC73F13008B2FF6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B46BB21EC73F13008B2FF6 /* ViewController.swift */; };
 		88B46BB61EC73F13008B2FF6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88B46BB41EC73F13008B2FF6 /* Main.storyboard */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8827C7371F266A8600A23FC4 /* Animatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Animatable.swift; sourceTree = "<group>"; };
 		88B46BAD1EC73F13008B2FF6 /* AJMAnimatorView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AJMAnimatorView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88B46BB01EC73F13008B2FF6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		88B46BB21EC73F13008B2FF6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -58,6 +60,7 @@
 			children = (
 				88B46BB01EC73F13008B2FF6 /* AppDelegate.swift */,
 				88B46BB21EC73F13008B2FF6 /* ViewController.swift */,
+				8827C7371F266A8600A23FC4 /* Animatable.swift */,
 				88B46BB41EC73F13008B2FF6 /* Main.storyboard */,
 				88B46BB71EC73F13008B2FF6 /* Assets.xcassets */,
 				88B46BB91EC73F13008B2FF6 /* LaunchScreen.storyboard */,
@@ -77,6 +80,7 @@
 				88B46BA91EC73F12008B2FF6 /* Sources */,
 				88B46BAA1EC73F12008B2FF6 /* Frameworks */,
 				88B46BAB1EC73F12008B2FF6 /* Resources */,
+				SWIFCLEANCUSTOMRUNSCRIPT /* Swift-Clean Run Script */,
 			);
 			buildRules = (
 			);
@@ -135,12 +139,30 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		SWIFCLEANCUSTOMRUNSCRIPT /* Swift-Clean Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Swift-Clean Run Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "if [[ -z ${SKIP_SWIFTCLEAN} || ${SKIP_SWIFTCLEAN} != 1 ]]; then\nif [[ -d \"${LOCAL_APPS_DIR}/Swift-Clean.app\" ]]; then \n\"${LOCAL_APPS_DIR}\"/Swift-Clean.app/Contents/Resources/SwiftClean.app/Contents/MacOS/SwiftClean \"${SRCROOT}\"?@autoFix \nelse\necho \"warning: You have to install and set up Swift-Clean to use its features!\" \nfi\nfi";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		88B46BA91EC73F12008B2FF6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				88B46BC31EC73FBB008B2FF6 /* AJMAnimatorView.swift in Sources */,
+				8827C7381F266A8600A23FC4 /* Animatable.swift in Sources */,
 				88B46BB31EC73F13008B2FF6 /* ViewController.swift in Sources */,
 				88B46BB11EC73F13008B2FF6 /* AppDelegate.swift in Sources */,
 			);
@@ -306,6 +328,7 @@
 				88B46BC11EC73F13008B2FF6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
