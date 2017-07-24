@@ -67,51 +67,5 @@ class AJMAnimatorView : UIView {
 
     }
     
-    func createAnimatedMaskOn(path : UIBezierPath) -> CAShapeLayer {
-        let animationMaskLayer = CAShapeLayer()
-        animationMaskLayer.frame = self.bounds
-        animationMaskLayer.fillColor = UIColor.red.cgColor
-        animationMaskLayer.lineWidth = 95
-        animationMaskLayer.strokeStart = 0.0
-        animationMaskLayer.strokeEnd = 1.0
-        animationMaskLayer.strokeColor = UIColor.red.cgColor
-        animationMaskLayer.path = path.cgPath
-        return animationMaskLayer
-    }
     
-    func retrievePathFrom(rect : CGRect) -> UIBezierPath {
-        
-        let origin = rect.origin
-        
-        let left = CGPoint(x: rect.minX, y: rect.maxY)
-        let right = CGPoint(x: rect.maxX, y: rect.maxY)
-        let topRight = CGPoint(x: rect.maxX, y: rect.minY)
-        
-        let path = UIBezierPath()
-        path.move(to: origin)
-        path.addLine(to: left)
-        path.move(to: left)
-        path.addLine(to: right)
-        path.move(to: right)
-        path.addLine(to: topRight)
-        path.move(to: topRight)
-        path.addLine(to: origin)
-        
-        return path
-    }
-    
-    func retrievePathByShrinkingRect(rect : CGRect, path: UIBezierPath, counter : Int) -> UIBezierPath {
-        
-        print(rect)
-        if counter == 100 {
-            return path
-        }
-        let newPath = retrievePathFrom(rect: rect)
-        path.append(newPath)
-        
-        let pct = CGFloat(0.10)
-        let newRect = rect.insetBy(dx: rect.width * (pct/2), dy: rect.height * (pct/2))
-        
-        return retrievePathByShrinkingRect(rect: newRect, path: path, counter: counter + 1)
-    }
 }
