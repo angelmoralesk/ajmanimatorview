@@ -42,29 +42,7 @@ class AJMAnimatorView : UIView {
         performAnimations(animationMaskLayer: mask , path: path)
     }
     
-    func performAnimations(animationMaskLayer : CAShapeLayer, path : UIBezierPath) {
         
-        let animations = CAAnimationGroup()
-        var animationsArray = Array<CAAnimation>()
-        
-        let nextAnimation = CABasicAnimation(keyPath: "strokeEnd")
-        nextAnimation.duration = 7
-        nextAnimation.beginTime = 0
-        nextAnimation.fromValue = 0
-        nextAnimation.toValue = 1
-        nextAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn)
-        nextAnimation.fillMode = kCAFillModeForwards
-        animationsArray.append(nextAnimation)
-        
-        animations.animations = animationsArray
-        animations.repeatCount = HUGE
-        animations.duration = 7
-        //animations.delegate =
-        
-        animationMaskLayer.add(animations, forKey: "rightAnimation")
-        
-        self.layer.mask = animationMaskLayer
-
     }
     
     
