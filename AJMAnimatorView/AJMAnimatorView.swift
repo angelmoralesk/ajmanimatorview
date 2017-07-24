@@ -11,6 +11,7 @@ import UIKit
 class AJMAnimatorView : UIView {
     
     private var imageView : UIImageView?
+    private var animator : Animatable?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -29,7 +30,6 @@ class AJMAnimatorView : UIView {
     }
     override func layoutSubviews() {
         super.layoutSubviews()
-       // prepareImageView()
     }
     
     func animateImage(image : UIImage) {
@@ -37,12 +37,9 @@ class AJMAnimatorView : UIView {
         imageView?.contentMode = .scaleAspectFit
         imageView?.frame = self.bounds
         self.addSubview(imageView!)
-        let path = retrievePathByShrinkingRect(rect: self.bounds, path: UIBezierPath(), counter: 0)
-        let mask = createAnimatedMaskOn(path: path)
-        performAnimations(animationMaskLayer: mask , path: path)
-    }
-    
         
+        animator = CrossDisolver(rect: self.bounds)
+        animator?.animate(layer: self.layer)
     }
     
     
