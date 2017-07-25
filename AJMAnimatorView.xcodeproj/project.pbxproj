@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		880E24541F2795A000514F94 /* Circle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880E24531F2795A000514F94 /* Circle.swift */; };
+		880E24561F2795F200514F94 /* Square.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880E24551F2795F200514F94 /* Square.swift */; };
 		8827C7381F266A8600A23FC4 /* Animatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8827C7371F266A8600A23FC4 /* Animatable.swift */; };
 		88B46BB11EC73F13008B2FF6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B46BB01EC73F13008B2FF6 /* AppDelegate.swift */; };
 		88B46BB31EC73F13008B2FF6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B46BB21EC73F13008B2FF6 /* ViewController.swift */; };
@@ -19,6 +20,7 @@
 
 /* Begin PBXFileReference section */
 		880E24531F2795A000514F94 /* Circle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Circle.swift; sourceTree = "<group>"; };
+		880E24551F2795F200514F94 /* Square.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Square.swift; sourceTree = "<group>"; };
 		8827C7371F266A8600A23FC4 /* Animatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Animatable.swift; sourceTree = "<group>"; };
 		88B46BAD1EC73F13008B2FF6 /* AJMAnimatorView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AJMAnimatorView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88B46BB01EC73F13008B2FF6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -45,6 +47,7 @@
 			isa = PBXGroup;
 			children = (
 				8827C7371F266A8600A23FC4 /* Animatable.swift */,
+				880E24551F2795F200514F94 /* Square.swift */,
 				880E24531F2795A000514F94 /* Circle.swift */,
 			);
 			name = Animations;
@@ -172,6 +175,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				880E24561F2795F200514F94 /* Square.swift in Sources */,
 				88B46BC31EC73FBB008B2FF6 /* AJMAnimatorView.swift in Sources */,
 				880E24541F2795A000514F94 /* Circle.swift in Sources */,
 				8827C7381F266A8600A23FC4 /* Animatable.swift in Sources */,
