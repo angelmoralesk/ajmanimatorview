@@ -11,13 +11,13 @@ import UIKit
 struct Circle : Animatable {
     
     var path: UIBezierPath
-    var mask: CAShapeLayer
+    var animatedMasks: CAShapeLayer
     
     // MARK: - Initializer
     
     init(rect : CGRect) {
-        path = Circle.createPathByShrinkingCircle(rect: rect, path: UIBezierPath(), counter: 0)
-        mask = Circle.createAnimatedMaskOn(rect: rect, path: path)
+        path = Circle.createAnimatedMasksShrinkingCircle(rect, path: UIBezierPath())
+        animatedMasks = Circle.createAnimatedMaskOn(rect: rect, path: path)
     }
     
      // MARK: - Helper functions
@@ -34,31 +34,36 @@ struct Circle : Animatable {
         return animationMaskLayer
     }
     
-    fileprivate static func createPathByShrinkingCircle(rect : CGRect, path: UIBezierPath, counter : Int) -> UIBezierPath {
+    fileprivate static func createAnimatedMasksShrinkingCircle(_ rect : CGRect, path : UIBezierPath) -> UIBezierPath {
         print(rect)
+        
         if rect.width <= 50 || rect.height <= 50 {
             return path
         }
+        var resultPath = path
         let middlePoint = CGPoint(x: rect.midX, y: rect.midY)
-        let bottom = UIBezierPath(arcCenter: middlePoint, radius: rect.midX, startAngle: 0, endAngle: CGFloat(M_PI), clockwise: true)
-        path.append(bottom)
-        let upper = UIBezierPath(arcCenter: middlePoint, radius: rect.midX, startAngle: CGFloat(M_PI), endAngle: CGFloat(2 * M_PI), clockwise: true)
-        path.append(upper)
+        
+        let bottomPart = UIBezierPath(arcCenter: middlePoint, radius: rect.width / 2, startAngle: 0, endAngle: CGFloat(M_PI), clockwise: true)
+        let upperPart = UIBezierPath(arcCenter: middlePoint, radius: rect.width / 2, startAngle: CGFloat(M_PI), endAngle: CGFloat(2 * M_PI), clockwise: true)
+        
+        resultPath.append(bottomPart)
+        resultPath.append(upperPart)
         
         let pct = CGFloat(0.05)
         let newRect = rect.insetBy(dx: rect.width * (pct/2), dy: rect.height * (pct/2))
         
-        return createPathByShrinkingCircle(rect: newRect, path: path, counter: counter + 1)
+        return createAnimatedMasksShrinkingCircle(newRect, path: resultPath)
     }
     
     // MARK: - Animatable protocol functions
     
     func animate(layer: CALayer) {
+        
         let animations = CAAnimationGroup()
         var animationsArray = Array<CAAnimation>()
         
         let nextAnimation = CABasicAnimation(keyPath: "strokeEnd")
-        nextAnimation.duration = 100
+        nextAnimation.duration = 2
         nextAnimation.beginTime = 0
         nextAnimation.fromValue = 0
         nextAnimation.toValue = 1
@@ -68,10 +73,13 @@ struct Circle : Animatable {
         
         animations.animations = animationsArray
         animations.repeatCount = HUGE
-        animations.duration = 100
+        animations.duration = 2
         
-        mask.add(animations, forKey: "rightAnimation")
-        layer.mask = mask
+        let aMask = animatedMasks
+        aMask.add(animations, forKey: "rightAnimation")
+
+        layer.mask = aMask
+        
     }
     
     
