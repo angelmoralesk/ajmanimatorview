@@ -16,27 +16,30 @@ struct Square : Animatable {
     // MARK: - Initializer
     
     init(rect : CGRect) {
-        path = Square.createPathByShrinkingRect(rect: rect, path: UIBezierPath(), counter: 0)
-        mask = Square.createAnimatedMaskOn(rect : rect, path: path)
+        path = Square.createRectanglePathsUsing(rect)
+        mask = Square.createAnimatedMaskOnUsing(path.cgPath, onRect: rect)
     }
     
     // MARK: - Helper functions
     
-    fileprivate static func createPathByShrinkingRect(rect : CGRect, path: UIBezierPath, counter : Int) -> UIBezierPath {
-        print(rect)
-        if counter == 100 {
-            return path
-        }
-        let newPath = retrievePathFrom(rect: rect)
-        path.append(newPath)
+    fileprivate static func createRectanglePathsUsing(_ rect : CGRect, resultPath: UIBezierPath = UIBezierPath()) -> UIBezierPath {
         
+        let minimumAcceptableValue = CGFloat(0.01)
+        if rect.width <= minimumAcceptableValue  || rect.height <= minimumAcceptableValue {
+            return resultPath
+        }
+        
+        let newPath = createRectanglePathFrom(rect)
+        resultPath.append(newPath)
+        
+        // shrink current rect
         let pct = CGFloat(0.10)
         let newRect = rect.insetBy(dx: rect.width * (pct/2), dy: rect.height * (pct/2))
         
-        return createPathByShrinkingRect(rect: newRect, path: path, counter: counter + 1)
+        return createRectanglePathsUsing(newRect, resultPath: resultPath)
     }
     
-    fileprivate static func retrievePathFrom(rect : CGRect) -> UIBezierPath {
+    fileprivate static func createRectanglePathFrom(_ rect : CGRect) -> UIBezierPath {
         let origin = rect.origin
         
         let left = CGPoint(x: rect.minX, y: rect.maxY)
@@ -56,7 +59,7 @@ struct Square : Animatable {
         return path
     }
     
-    fileprivate static func createAnimatedMaskOn(rect : CGRect, path : UIBezierPath) -> CAShapeLayer {
+    fileprivate static func createAnimatedMaskOnUsing(_ path : CGPath, onRect rect : CGRect) -> CAShapeLayer {
         let animationMaskLayer = CAShapeLayer()
         animationMaskLayer.frame = rect
         animationMaskLayer.fillColor = UIColor.red.cgColor
@@ -64,7 +67,7 @@ struct Square : Animatable {
         animationMaskLayer.strokeStart = 0.0
         animationMaskLayer.strokeEnd = 1.0
         animationMaskLayer.strokeColor = UIColor.red.cgColor
-        animationMaskLayer.path = path.cgPath
+        animationMaskLayer.path = path
         return animationMaskLayer
     }
     
