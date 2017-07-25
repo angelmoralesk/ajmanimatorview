@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		880E24541F2795A000514F94 /* Circle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880E24531F2795A000514F94 /* Circle.swift */; };
 		8827C7381F266A8600A23FC4 /* Animatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8827C7371F266A8600A23FC4 /* Animatable.swift */; };
 		88B46BB11EC73F13008B2FF6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B46BB01EC73F13008B2FF6 /* AppDelegate.swift */; };
 		88B46BB31EC73F13008B2FF6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B46BB21EC73F13008B2FF6 /* ViewController.swift */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		880E24531F2795A000514F94 /* Circle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Circle.swift; sourceTree = "<group>"; };
 		8827C7371F266A8600A23FC4 /* Animatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Animatable.swift; sourceTree = "<group>"; };
 		88B46BAD1EC73F13008B2FF6 /* AJMAnimatorView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AJMAnimatorView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88B46BB01EC73F13008B2FF6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -39,6 +41,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		880E24571F279FF400514F94 /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				8827C7371F266A8600A23FC4 /* Animatable.swift */,
+				880E24531F2795A000514F94 /* Circle.swift */,
+			);
+			name = Animations;
+			sourceTree = "<group>";
+		};
 		88B46BA41EC73F12008B2FF6 = {
 			isa = PBXGroup;
 			children = (
@@ -58,9 +69,9 @@
 		88B46BAF1EC73F13008B2FF6 /* AJMAnimatorView */ = {
 			isa = PBXGroup;
 			children = (
+				880E24571F279FF400514F94 /* Animations */,
 				88B46BB01EC73F13008B2FF6 /* AppDelegate.swift */,
 				88B46BB21EC73F13008B2FF6 /* ViewController.swift */,
-				8827C7371F266A8600A23FC4 /* Animatable.swift */,
 				88B46BB41EC73F13008B2FF6 /* Main.storyboard */,
 				88B46BB71EC73F13008B2FF6 /* Assets.xcassets */,
 				88B46BB91EC73F13008B2FF6 /* LaunchScreen.storyboard */,
@@ -162,6 +173,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				88B46BC31EC73FBB008B2FF6 /* AJMAnimatorView.swift in Sources */,
+				880E24541F2795A000514F94 /* Circle.swift in Sources */,
 				8827C7381F266A8600A23FC4 /* Animatable.swift in Sources */,
 				88B46BB31EC73F13008B2FF6 /* ViewController.swift in Sources */,
 				88B46BB11EC73F13008B2FF6 /* AppDelegate.swift in Sources */,
