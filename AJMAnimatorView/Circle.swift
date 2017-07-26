@@ -12,26 +12,33 @@ struct Circle : Animatable {
     
     var path: UIBezierPath
     var animatedMask: CAShapeLayer
+    
     private var segments :  Array<CGFloat>
-    var totalAnimationDuration: Double = 20
+    var totalAnimationDuration: Double = 10
 
     // MARK: - Initializer
     
     init(rect : CGRect) {
-        let tuple  = Circle.createAnimatedMasksShrinkingCircle(rect, path: [UIBezierPath()])
-        let listOfPaths = tuple.0
-        let result = UIBezierPath()
-        for temp in (0..<listOfPaths.count) {
-           result.append(listOfPaths[temp])
-        }
-        path = result
+        
+        let tuple  = Circle.createCirclePathsAndSegmentsUsing(rect)
+        
+        path = Circle.unifyCirclePaths(tuple.0)
         segments = tuple.1
-        animatedMask = Circle.createAnimatedMaskOn(rect: rect, path: path)
+        
+        animatedMask = Circle.createAnimatedMaskOn(rect: rect, using:path)
     }
     
      // MARK: - Helper functions
     
-    fileprivate static func createAnimatedMaskOn(rect : CGRect, path : UIBezierPath) -> CAShapeLayer {
+    fileprivate static func unifyCirclePaths(_ paths : [UIBezierPath]) -> UIBezierPath {
+        let result = UIBezierPath()
+        for temp in (0..<paths.count) {
+            result.append(paths[temp])
+        }
+        return result
+    }
+    
+    fileprivate static func createAnimatedMaskOn(rect : CGRect, using path : UIBezierPath) -> CAShapeLayer {
         let animationMaskLayer = CAShapeLayer()
         animationMaskLayer.frame = rect
         animationMaskLayer.fillColor = UIColor.clear.cgColor
@@ -43,35 +50,35 @@ struct Circle : Animatable {
         return animationMaskLayer
     }
     
-    fileprivate static func createAnimatedMasksShrinkingCircle(_ rect : CGRect, path : [UIBezierPath], iterations : Array<CGFloat> = [], counter : CGFloat = 0) -> ([UIBezierPath], Array<CGFloat>)  {
+    fileprivate static func createCirclePathsAndSegmentsUsing(_ rect : CGRect, path : [UIBezierPath] = [], segments : Array<CGFloat> = []) -> ([UIBezierPath], Array<CGFloat>)  {
         
-        if rect.width <= 0.01 || rect.height <= 0.01 {
-            return (path, iterations)
+        let minimumAcceptableValue = CGFloat(0.1)
+        if rect.width <= minimumAcceptableValue || rect.height <= minimumAcceptableValue {
+            return (path, segments)
         }
      
-        var itr = iterations
-        var temp = counter
-        temp = (20.3 + ( CGFloat(counter) + 1))
-        itr.append(temp)
+        // create and append a segment
+        var mutableSegments = segments
+        let aSegment = CGFloat(1)
+        mutableSegments.append(aSegment)
         
-        var paths = path
-        
+        // create a path
         let middlePoint = CGPoint(x: rect.midX, y: rect.midY)
+        let bottomPath = UIBezierPath(arcCenter: middlePoint, radius: rect.width / 2, startAngle: 0, endAngle: CGFloat(M_PI), clockwise: true)
+        let upperPath = UIBezierPath(arcCenter: middlePoint, radius: rect.width / 2, startAngle: CGFloat(M_PI), endAngle: CGFloat(2 * M_PI), clockwise: true)
         
         let singlePath = UIBezierPath()
+        singlePath.append(bottomPath)
+        singlePath.append(upperPath)
         
-        let bottomPart = UIBezierPath(arcCenter: middlePoint, radius: rect.width / 2, startAngle: 0, endAngle: CGFloat(M_PI), clockwise: true)
-        let upperPart = UIBezierPath(arcCenter: middlePoint, radius: rect.width / 2, startAngle: CGFloat(M_PI), endAngle: CGFloat(2 * M_PI), clockwise: true)
-        
-        singlePath.append(bottomPart)
-        singlePath.append(upperPart)
-        
+        var paths = path
         paths.append(singlePath)
         
-        let pct = CGFloat(0.04)
-        let newRect = rect.insetBy(dx: rect.width * (pct/2), dy: rect.height * (pct/2))
+        // decrease the size of current rect
+        let kDiminishFactor = CGFloat(0.04) / 2
+        let newRect = rect.insetBy(dx: rect.width * kDiminishFactor, dy: rect.height * kDiminishFactor)
         
-        return createAnimatedMasksShrinkingCircle(newRect, path: paths, iterations: itr, counter:temp)
+        return createCirclePathsAndSegmentsUsing(newRect, path: paths, segments: mutableSegments)
     }
     
     // MARK: - Animatable protocol functions
@@ -80,10 +87,10 @@ struct Circle : Animatable {
         
         func createAnimationGroup() -> CAAnimationGroup {
             
-            var totalPathLength: CGFloat = 0.0
+            var totalSegmentLength: CGFloat = 0.0
             
-            for lineSegment in segments {
-                totalPathLength += lineSegment
+            for segment in segments {
+                totalSegmentLength += segment
             }
             
             let animations = CAAnimationGroup()
@@ -93,11 +100,11 @@ struct Circle : Animatable {
             var lastStrokeEnd: CGFloat = 0.0
             
             for line in 0..<segments.count {
-                let segmentLength = segments[line]
-                let portion = segmentLength / totalPathLength
+                let segment = segments[line]
+                let portion = segment / totalSegmentLength
                 
                 let nextAnimation = CABasicAnimation(keyPath: "strokeEnd")
-                nextAnimation.duration = Double(portion) * (self.totalAnimationDuration / 2)
+                nextAnimation.duration = Double(portion) * self.totalAnimationDuration
 
                 nextAnimation.beginTime = lastAnimationEndTime
                 nextAnimation.fromValue = lastStrokeEnd
@@ -106,7 +113,7 @@ struct Circle : Animatable {
                 nextAnimation.fillMode = kCAFillModeForwards
                 
                 lastStrokeEnd += portion
-                lastAnimationEndTime += Double(portion) * (self.totalAnimationDuration / 2)
+                lastAnimationEndTime += Double(portion) * self.totalAnimationDuration
                 
                 animationsArray.append(nextAnimation)
             }
