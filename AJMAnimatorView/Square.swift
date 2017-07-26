@@ -11,13 +11,13 @@ import UIKit
 struct Square : Animatable {
     
     var path: UIBezierPath
-    var mask: CAShapeLayer
+    var animatedMask: CAShapeLayer
     
     // MARK: - Initializer
     
     init(rect : CGRect) {
         path = Square.createRectanglePathsUsing(rect)
-        mask = Square.createAnimatedMaskOnUsing(path.cgPath, onRect: rect)
+        animatedMask = Square.createAnimatedMaskOnUsing(path.cgPath, onRect: rect)
     }
     
     // MARK: - Helper functions
@@ -90,8 +90,8 @@ struct Square : Animatable {
         animations.repeatCount = HUGE
         animations.duration = 7
         
-        mask.add(animations, forKey: "rightAnimation")
-        layer.mask = mask
+        animatedMask.add(animations, forKey: "rightAnimation")
+        layer.mask = animatedMask
     }
     
    
