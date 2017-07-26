@@ -59,28 +59,53 @@ struct Circle : Animatable {
     
     func animate(layer: CALayer) {
         
-        let animations = CAAnimationGroup()
-        var animationsArray = Array<CAAnimation>()
-        
-        let nextAnimation = CABasicAnimation(keyPath: "strokeEnd")
-        nextAnimation.duration = 2
-        nextAnimation.beginTime = 0
-        nextAnimation.fromValue = 0
-        nextAnimation.toValue = 1
-        nextAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn)
-        nextAnimation.fillMode = kCAFillModeForwards
-        animationsArray.append(nextAnimation)
-        
-        animations.animations = animationsArray
-        animations.repeatCount = HUGE
-        animations.duration = 2
-        
-        let aMask = animatedMasks
-        aMask.add(animations, forKey: "rightAnimation")
+        func createAnimationGroup() -> CAAnimationGroup {
+            
+            var totalPathLength: CGFloat = 0.0
+            
+            for lineSegment in segments {
+                totalPathLength += lineSegment
+            }
+            
+            let animations = CAAnimationGroup()
+            var animationsArray = Array<CAAnimation>()
+            
+            var lastAnimationEndTime: Double = 0.0
+            var lastStrokeEnd: CGFloat = 0.0
+            
+            for line in 0..<segments.count {
+                let segmentLength = segments[line]
+                let portion = segmentLength / totalPathLength
+                
+                let nextAnimation = CABasicAnimation(keyPath: "strokeEnd")
+                nextAnimation.duration = Double(portion) * (self.totalAnimationDuration / 2)
 
-        layer.mask = aMask
+                nextAnimation.beginTime = lastAnimationEndTime
+                nextAnimation.fromValue = lastStrokeEnd
+                nextAnimation.toValue = lastStrokeEnd + portion
+                nextAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn)
+                nextAnimation.fillMode = kCAFillModeForwards
+                
+                lastStrokeEnd += portion
+                lastAnimationEndTime += Double(portion) * (self.totalAnimationDuration / 2)
+                
+                animationsArray.append(nextAnimation)
+            }
+            
+             animations.animations = animationsArray
+             animations.repeatCount = HUGE
+             animations.duration = self.totalAnimationDuration
+            return animations
+        }
+       
+        let animation = createAnimationGroup()
+        animatedMask.add(animation, forKey: "rightAnimation")
+        
+        layer.mask = animatedMask
         
     }
     
     
 }
+
+
