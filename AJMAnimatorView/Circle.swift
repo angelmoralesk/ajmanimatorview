@@ -11,13 +11,22 @@ import UIKit
 struct Circle : Animatable {
     
     var path: UIBezierPath
-    var animatedMasks: CAShapeLayer
-    
+    var animatedMask: CAShapeLayer
+    private var segments :  Array<CGFloat>
+    var totalAnimationDuration: Double = 20
+
     // MARK: - Initializer
     
     init(rect : CGRect) {
-        path = Circle.createAnimatedMasksShrinkingCircle(rect, path: UIBezierPath())
-        animatedMasks = Circle.createAnimatedMaskOn(rect: rect, path: path)
+        let tuple  = Circle.createAnimatedMasksShrinkingCircle(rect, path: [UIBezierPath()])
+        let listOfPaths = tuple.0
+        let result = UIBezierPath()
+        for temp in (0..<listOfPaths.count) {
+           result.append(listOfPaths[temp])
+        }
+        path = result
+        segments = tuple.1
+        animatedMask = Circle.createAnimatedMaskOn(rect: rect, path: path)
     }
     
      // MARK: - Helper functions
