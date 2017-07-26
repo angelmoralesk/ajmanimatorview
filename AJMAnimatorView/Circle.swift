@@ -34,8 +34,8 @@ struct Circle : Animatable {
     fileprivate static func createAnimatedMaskOn(rect : CGRect, path : UIBezierPath) -> CAShapeLayer {
         let animationMaskLayer = CAShapeLayer()
         animationMaskLayer.frame = rect
-        animationMaskLayer.fillColor = UIColor.red.cgColor
-        animationMaskLayer.lineWidth = 10
+        animationMaskLayer.fillColor = UIColor.clear.cgColor
+        animationMaskLayer.lineWidth = 40
         animationMaskLayer.strokeStart = 0.0
         animationMaskLayer.strokeEnd = 1.0
         animationMaskLayer.strokeColor = UIColor.red.cgColor
