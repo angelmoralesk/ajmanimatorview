@@ -34,25 +34,35 @@ struct Circle : Animatable {
         return animationMaskLayer
     }
     
-    fileprivate static func createAnimatedMasksShrinkingCircle(_ rect : CGRect, path : UIBezierPath) -> UIBezierPath {
-        print(rect)
+    fileprivate static func createAnimatedMasksShrinkingCircle(_ rect : CGRect, path : [UIBezierPath], iterations : Array<CGFloat> = [], counter : CGFloat = 0) -> ([UIBezierPath], Array<CGFloat>)  {
         
-        if rect.width <= 50 || rect.height <= 50 {
-            return path
+        if rect.width <= 0.01 || rect.height <= 0.01 {
+            return (path, iterations)
         }
-        var resultPath = path
+     
+        var itr = iterations
+        var temp = counter
+        temp = (20.3 + ( CGFloat(counter) + 1))
+        itr.append(temp)
+        
+        var paths = path
+        
         let middlePoint = CGPoint(x: rect.midX, y: rect.midY)
+        
+        let singlePath = UIBezierPath()
         
         let bottomPart = UIBezierPath(arcCenter: middlePoint, radius: rect.width / 2, startAngle: 0, endAngle: CGFloat(M_PI), clockwise: true)
         let upperPart = UIBezierPath(arcCenter: middlePoint, radius: rect.width / 2, startAngle: CGFloat(M_PI), endAngle: CGFloat(2 * M_PI), clockwise: true)
         
-        resultPath.append(bottomPart)
-        resultPath.append(upperPart)
+        singlePath.append(bottomPart)
+        singlePath.append(upperPart)
         
-        let pct = CGFloat(0.05)
+        paths.append(singlePath)
+        
+        let pct = CGFloat(0.04)
         let newRect = rect.insetBy(dx: rect.width * (pct/2), dy: rect.height * (pct/2))
         
-        return createAnimatedMasksShrinkingCircle(newRect, path: resultPath)
+        return createAnimatedMasksShrinkingCircle(newRect, path: paths, iterations: itr, counter:temp)
     }
     
     // MARK: - Animatable protocol functions
