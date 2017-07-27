@@ -59,7 +59,7 @@ struct Circle : Animatable {
      
         // create and append a segment
         var mutableSegments = segments
-        let aSegment = CGFloat(1)
+        let aSegment = CGFloat(2 * rect.width) * CGFloat(M_PI)
         mutableSegments.append(aSegment)
         
         // create a path
