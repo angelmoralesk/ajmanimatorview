@@ -1,4 +1,4 @@
-# AJMAnimatorview
+# AJMAnimatorView
 
 AJMAnimatorview is a custom view which animates the appearance of an image using Core Animation and Core Graphics. There are two available style animations : square and circle.
 
