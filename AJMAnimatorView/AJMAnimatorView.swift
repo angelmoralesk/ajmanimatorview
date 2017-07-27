@@ -8,6 +8,11 @@
 
 import UIKit
 
+enum AJMAnimatorStyle {
+    case Circle
+    case Square
+}
+
 class AJMAnimatorView : UIView {
     
     private var imageView : UIImageView?
@@ -32,13 +37,19 @@ class AJMAnimatorView : UIView {
         super.layoutSubviews()
     }
     
-    func animateImage(image : UIImage) {
+    func animateImage(image : UIImage, usingStyle style : AJMAnimatorStyle = .Square) {
         imageView = UIImageView(image: image)
         imageView?.contentMode = .scaleAspectFit
         imageView?.frame = self.bounds
         self.addSubview(imageView!)
         
-        animator = CrossDisolver(rect: self.bounds)
+        switch style {
+        case .Circle:
+            animator = Circle(rect: self.bounds)
+        default:
+            animator = Square(rect: self.bounds)
+        }
+        
         animator?.animate(layer: self.layer)
     }
     

@@ -18,7 +18,7 @@ class ViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        animatedView.animateImage(image: UIImage(named: "nube.jpg")!)
+        animatedView.animateImage(image: UIImage(named: "nube.jpg")!, usingStyle: AJMAnimatorStyle.Square)
     }
 
     override func didReceiveMemoryWarning() {
