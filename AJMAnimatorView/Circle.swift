@@ -20,12 +20,16 @@ struct Circle : Animatable {
     
     init(rect : CGRect) {
         
-        let tuple  = Circle.createCirclePathsAndSegmentsUsing(rect)
+        let maxSize = rect.width > rect.height ? rect.width : rect.height
+    
+        var square = CGRect(x: 0, y:  0, width: maxSize, height: maxSize)
+        square = square.offsetBy(dx: (-1 * (rect.width/5)), dy:0)
+        let tuple  = Circle.createCirclePathsAndSegmentsUsing(square)
         
         path = Circle.unifyCirclePaths(tuple.0)
         segments = tuple.1
         
-        animatedMask = Circle.createAnimatedMaskOn(rect: rect, using:path)
+        animatedMask = Circle.createAnimatedMaskOn(rect: square, using:path)
     }
     
      // MARK: - Helper functions
