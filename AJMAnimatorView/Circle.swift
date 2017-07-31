@@ -20,10 +20,11 @@ struct Circle : Animatable {
     
     init(rect : CGRect) {
         
-        let maxSize = rect.width > rect.height ? rect.width : rect.height
-    
-        var square = CGRect(x: 0, y:  0, width: maxSize, height: maxSize)
-        square = square.offsetBy(dx: (-1 * (rect.width/5)), dy:0)
+        let hypothenuse = sqrt((rect.width*rect.width) + (rect.height*rect.height))
+        var square = CGRect(x: 0, y:  0, width: hypothenuse, height: hypothenuse)
+        
+        let difference = (square.midX - rect.midX, square.midY - rect.midY)
+        square = square.offsetBy(dx: -difference.0/2, dy: -difference.1/2)
         let tuple  = Circle.createCirclePathsAndSegmentsUsing(square)
         
         path = Circle.unifyCirclePaths(tuple.0)
